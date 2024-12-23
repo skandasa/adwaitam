@@ -1,0 +1,23 @@
+vectordb:
+  provider: chroma
+  config:
+    collection_name: 'nb-kb'
+    host: localhost
+    port: 8000
+    allow_reset: true
+
+llm:
+  provider: google
+  config:
+    model: gemini-1.5-flash
+    # max_tokens: 1000
+    # temperature: 0.5
+    # top_p: 1
+    # stream: false
+
+embedder:
+  provider: google
+  config:
+    model: 'models/embedding-001'
+    task_type: "retrieval_document"
+    title: "Embeddings for Embedchain"
