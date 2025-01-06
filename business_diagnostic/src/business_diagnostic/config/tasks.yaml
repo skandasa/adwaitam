@@ -1,0 +1,63 @@
+---
+collect_company_info_task:
+  description: Search the web to find key details about the SME {company_name}, including
+    year founded, HQ address, CEO, products/services, and recent news articles.
+    Company Name {company_name}
+    Website {company_website}
+  expected_output: A detailed report containing key information about {company_name},
+    including year founded, HQ address, CEO, products/services, and recent news with
+    links.
+  async_execution: false
+  agent: company_analysis_specialist
+analyze_digital_presence_task:
+  description: Analyze the current digital presence of {company_name} across various
+    channels, including website traffic, social media followers, and SEO metrics.
+    Company Name {company_name}
+    Website {company_website}
+  expected_output: A comprehensive report on the digital presence of {company_name},
+    covering website traffic, social media engagement, and SEO performance.
+  async_execution: false
+  agent: digital_presence_analyzer
+  context:
+  - collect_company_info_task
+industry_trend_analysis_task:
+  description: Conduct PESTLE analysis based on the industry of {company_name} to
+    identify key trends impacting the business currently and in the next two years.
+    Company Name  {company_name}
+    Website  {company_website}
+  expected_output: A detailed PESTLE analysis report highlighting key trends affecting {company_name} and their potential impacts over the next two years.
+  async_execution: false
+  agent: market_trend_analyzer
+  context:
+  - collect_company_info_task
+competitor_analysis_task:
+  description: Research and analyze the top three competitors of {company_name} focusing
+    on their digital presence and market performance over the last three years.
+  expected_output: A competitor analysis report detailing the digital presence and
+    market performance of the top three competitors of {company_name}.
+  async_execution: false
+  agent: market_trend_analyzer
+  context:
+  - collect_company_info_task
+consolidated_report_task:
+  description: Compile all findings from the previous analyses into a comprehensive
+    markdown report that outlines the current situation and future scenarios for {company_name}.
+  expected_output: A detailed markdown report summarizing the findings from the company
+    analysis, digital presence analysis, industry trend analysis, and competitor analysis.
+  async_execution: false
+  agent: market_trend_analyzer
+  context:
+  - analyze_digital_presence_task
+  - industry_trend_analysis_task
+  - competitor_analysis_task
+generate_markdown_report_task:
+  description: Generate a detailed markdown report based on the consolidated findings
+    for the company
+    Company Name {company_name}
+    Website {company_website}
+  expected_output: A well-structured markdown report that outlines the digital maturity
+    score, identified gaps, strengths, and prioritized areas for improvement for {company_name}.
+  async_execution: false
+  agent: market_trend_analyzer
+  context:
+  - consolidated_report_task

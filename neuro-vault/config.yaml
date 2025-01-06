@@ -1,10 +1,12 @@
 vectordb:
-  provider: chroma
+  provider: pinecone
   config:
-    collection_name: 'nb-kb'
-    host: localhost
-    port: 8000
-    allow_reset: true
+    metric: cosine
+    vector_dimension: 768
+    index_name: neuro-vault
+    serverless_config:
+      cloud: aws
+      region: us-east-1
 
 llm:
   provider: google

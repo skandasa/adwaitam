@@ -40,7 +40,7 @@ def get_channel_id(channel_handle:str):
 
     response = request.execute()
     if response["items"]:
-        return response["items"][0]["id"]["channel_id"]
+        return response["items"][0]["id"]["channelId"]
     else:
         return None
     
@@ -116,7 +116,8 @@ async def embed_pdf_file(files:list[UploadFile]):
             return "Invalid file type. Only PDF files are allowed"
         file_name = f'{folder_path}/{file.filename}'
         with open(file_name, "wb") as f:
-            f.write(await file.file.read())
+            f.write(await file.read())
+            print(f"File {file_name} uploaded")
             app.add(file_name,data_type="pdf_file")
     return "Files embedded successfully"
 
@@ -127,7 +128,7 @@ async def embed_audio_file(files:list[UploadFile]):
             return "Invalid file type. Only wav files are allowed"
         file_name = f'{folder_path}/{file.filename}'
         with open(file_name, "wb") as f:
-            f.write(await file.file.read())
+            f.write(await file.read())
             app.add(file_name,data_type="audio")
     return "Files embedded successfully"
 
@@ -139,7 +140,7 @@ async def embed_video_file(files:list[UploadFile]):
             return "Invalid file type. Only mp4 files are allowed"
         file_name = f'{folder_path}/{file.filename}'
         with open(file_name, "wb") as f:
-            f.write(await file.file.read())
+            f.write(await file.read())
             audio_file = convert_video_to_audio(file_name)
             app.add(audio_file,data_type="audio")
     return "Files embedded successfully"

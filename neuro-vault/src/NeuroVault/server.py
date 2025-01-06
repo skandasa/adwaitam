@@ -1,5 +1,7 @@
-from fastapi import FastAPI, UploadFile, HTTPResponse
+from http.client import HTTPResponse
+from fastapi import FastAPI, UploadFile
 from typing import List
+import uvicorn
 from fastapi.responses import JSONResponse
 from NeuroVault.vault import embed_youtube_video, embed_youtube_channel, embed_pdf_file, embed_audio_file, embed_video_file, query_vault
 
@@ -50,4 +52,7 @@ async def embed_video_file_endpoint(files: List[UploadFile]):
 async def query_vault_endpoint(query: str):
     results = query_vault(query)
     return JSONResponse(content=results)
+
+def main():
+    uvicorn.run(app, host="0.0.0.0", port=8000)
 
